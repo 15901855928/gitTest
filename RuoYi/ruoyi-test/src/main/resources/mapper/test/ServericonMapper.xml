@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.test.mapper.ServericonMapper">
+    
+    <resultMap type="Servericon" id="ServericonResult">
+        <result property="type"    column="type"    />
+        <result property="name"    column="name"    />
+        <result property="icon"    column="icon"    />
+        <result property="id"    column="id"    />
+    </resultMap>
+
+    <sql id="selectServericonVo">
+        select type, name, icon, id from servericon
+    </sql>
+
+    <select id="selectServericonList" parameterType="Servericon" resultMap="ServericonResult">
+        <include refid="selectServericonVo"/>
+        <where>  
+            <if test="type != null "> and type = #{type}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="id != null "> and id = #{id}</if>
+        </where>
+    </select>
+    
+    <select id="selectServericonById" parameterType="Long" resultMap="ServericonResult">
+        <include refid="selectServericonVo"/>
+        where type = #{type}
+    </select>
+        
+    <insert id="insertServericon" parameterType="Servericon">
+        insert into servericon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="name != null">name,</if>
+            <if test="icon != null">icon,</if>
+            <if test="id != null">id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="name != null">#{name},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="id != null">#{id},</if>
+         </trim>
+    </insert>
+
+    <update id="updateServericon" parameterType="Servericon">
+        update servericon
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="id != null">id = #{id},</if>
+        </trim>
+        where type = #{type}
+    </update>
+
+    <delete id="deleteServericonById" parameterType="Long">
+        delete from servericon where type = #{type}
+    </delete>
+
+    <delete id="deleteServericonByIds" parameterType="String">
+        delete from servericon where type in 
+        <foreach item="type" collection="array" open="(" separator="," close=")">
+            #{type}
+        </foreach>
+    </delete>
+
+</mapper>

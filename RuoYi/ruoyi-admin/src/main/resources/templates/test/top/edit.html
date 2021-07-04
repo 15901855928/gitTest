@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改首页顶部图片')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-top-edit" th:object="${top}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">图片名：</label>
+                <div class="col-sm-8">
+                    <input name="name" th:field="*{name}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">图片地址：</label>
+                <div class="col-sm-8">
+                    <input name="address" th:field="*{address}" class="form-control" type="file">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "test/top";
+        $("#form-top-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+               uploadFile();
+            }
+        }
+        function uploadFile() {
+	var formData = new FormData();
+
+	formData.append('name', $("#name").val());
+	formData.append('id', $("#id").val());
+	formData.append('addr', $('#address')[0].files[0]);
+	$.ajax({
+		url: prefix + "/edit",
+		type: 'post',
+		cache: false,
+		data: formData,
+		processData: false,
+		contentType: false,
+		dataType: "json",
+		success: function(result) {
+			$.operate.successCallback(result);
+		}
+	});
+}
+    </script>
+</body>
+</html>

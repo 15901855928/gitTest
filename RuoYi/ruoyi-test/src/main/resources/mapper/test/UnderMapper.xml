@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.test.mapper.UnderMapper">
+    
+    <resultMap type="Under" id="UnderResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+        <result property="url"    column="url"    />
+    </resultMap>
+
+    <sql id="selectUnderVo">
+        select id, name, address, url from under
+    </sql>
+
+    <select id="selectUnderList" parameterType="Under" resultMap="UnderResult">
+        <include refid="selectUnderVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+        </where>
+    </select>
+    
+    <select id="selectUnderById" parameterType="Long" resultMap="UnderResult">
+        <include refid="selectUnderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUnder" parameterType="Under">
+        insert into under
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="address != null">address,</if>
+            <if test="url != null">url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="address != null">#{address},</if>
+            <if test="url != null">#{url},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUnder" parameterType="Under">
+        update under
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="url != null">url = #{url},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUnderById" parameterType="Long">
+        delete from under where id = #{id}
+    </delete>
+
+    <delete id="deleteUnderByIds" parameterType="String">
+        delete from under where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

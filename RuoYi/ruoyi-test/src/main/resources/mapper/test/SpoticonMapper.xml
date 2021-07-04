@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.test.mapper.SpoticonMapper">
+    
+    <resultMap type="Spoticon" id="SpoticonResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+    </resultMap>
+
+    <sql id="selectSpoticonVo">
+        select id, name, address from spoticon
+    </sql>
+
+    <select id="selectSpoticonList" parameterType="Spoticon" resultMap="SpoticonResult">
+        <include refid="selectSpoticonVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+        </where>
+    </select>
+    
+    <select id="selectSpoticonById" parameterType="Long" resultMap="SpoticonResult">
+        <include refid="selectSpoticonVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSpoticon" parameterType="Spoticon" useGeneratedKeys="true" keyProperty="id">
+        insert into spoticon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="address != null">address,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="address != null">#{address},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSpoticon" parameterType="Spoticon">
+        update spoticon
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="address != null">address = #{address},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSpoticonById" parameterType="Long">
+        delete from spoticon where id = #{id}
+    </delete>
+
+    <delete id="deleteSpoticonByIds" parameterType="String">
+        delete from spoticon where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

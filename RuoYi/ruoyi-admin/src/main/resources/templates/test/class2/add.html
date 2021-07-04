@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增商铺类别详情')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-class2-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">店铺名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">子名称：</label>
+                <div class="col-sm-8">
+                    <input name="childname" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">商铺图片：</label>
+                <div class="col-sm-8">
+                    <textarea name="childpic" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">类别图标：</label>
+                <div class="col-sm-8">
+                    <input name="pic" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">子经纬度：</label>
+                <div class="col-sm-8">
+                    <input name="childlonlat" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">类别：</label>
+                <div class="col-sm-8">
+                    <input name="type" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">位置经度：</label>
+                <div class="col-sm-8">
+                    <input name="lon" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">位置纬度：</label>
+                <div class="col-sm-8">
+                    <input name="lat" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">id：</label>
+                <div class="col-sm-8">
+                    <input name="id" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "test/class2"
+        $("#form-class2-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-class2-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

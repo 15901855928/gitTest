@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.test.mapper.Detail2Mapper">
+    
+    <resultMap type="Detail2" id="Detail2Result">
+        <result property="id"    column="id"    />
+        <result property="cndetail"    column="cndetail"    />
+        <result property="endetail"    column="endetail"    />
+        <result property="markerid"    column="markerid"    />
+        <result property="cntitle"    column="cntitle"    />
+        <result property="entitle"    column="entitle"    />
+        <result property="icon"    column="icon"    />
+        <result property="pic1"    column="pic1"    />
+        <result property="pic2"    column="pic2"    />
+        <result property="pic3"    column="pic3"    />
+        <result property="pic4"    column="pic4"    />
+        <result property="pic5"    column="pic5"    />
+        <result property="bgpic"    column="bgpic"    />
+        <result property="soundcn"    column="soundcn"    />
+        <result property="sounden"    column="sounden"    />
+        <result property="soundhk"    column="soundhk"    />
+        <result property="lontitude"    column="lontitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="type"    column="type"    />
+        <result property="titlebg"    column="titlebg"    />
+        <result property="cardimg"    column="cardimg"    />
+    </resultMap>
+
+    <sql id="selectDetail2Vo">
+        select id, cndetail, endetail, markerid, cntitle, entitle, icon, pic1, pic2, pic3, pic4, pic5, bgpic, soundcn, sounden, soundhk, lontitude, latitude, type, titlebg, cardimg from detail2
+    </sql>
+
+    <select id="selectDetail2List" parameterType="Detail2" resultMap="Detail2Result">
+        <include refid="selectDetail2Vo"/>
+        <where>  
+            <if test="cndetail != null  and cndetail != ''"> and cndetail = #{cndetail}</if>
+            <if test="endetail != null  and endetail != ''"> and endetail = #{endetail}</if>
+            <if test="markerid != null "> and markerid = #{markerid}</if>
+            <if test="cntitle != null  and cntitle != ''"> and cntitle = #{cntitle}</if>
+            <if test="entitle != null  and entitle != ''"> and entitle = #{entitle}</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="pic1 != null  and pic1 != ''"> and pic1 = #{pic1}</if>
+            <if test="pic2 != null  and pic2 != ''"> and pic2 = #{pic2}</if>
+            <if test="pic3 != null  and pic3 != ''"> and pic3 = #{pic3}</if>
+            <if test="pic4 != null  and pic4 != ''"> and pic4 = #{pic4}</if>
+            <if test="pic5 != null  and pic5 != ''"> and pic5 = #{pic5}</if>
+            <if test="bgpic != null  and bgpic != ''"> and bgpic = #{bgpic}</if>
+            <if test="soundcn != null  and soundcn != ''"> and soundcn = #{soundcn}</if>
+            <if test="sounden != null  and sounden != ''"> and sounden = #{sounden}</if>
+            <if test="soundhk != null  and soundhk != ''"> and soundhk = #{soundhk}</if>
+            <if test="lontitude != null  and lontitude != ''"> and lontitude = #{lontitude}</if>
+            <if test="latitude != null  and latitude != ''"> and latitude = #{latitude}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="titlebg != null  and titlebg != ''"> and titlebg = #{titlebg}</if>
+            <if test="cardimg != null  and cardimg != ''"> and cardimg = #{cardimg}</if>
+        </where>
+    </select>
+    
+    <select id="selectDetail2ById" parameterType="Long" resultMap="Detail2Result">
+        <include refid="selectDetail2Vo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDetail2" parameterType="Detail2" useGeneratedKeys="true" keyProperty="id">
+        insert into detail2
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cndetail != null">cndetail,</if>
+            <if test="endetail != null">endetail,</if>
+            <if test="markerid != null">markerid,</if>
+            <if test="cntitle != null">cntitle,</if>
+            <if test="entitle != null">entitle,</if>
+            <if test="icon != null">icon,</if>
+            <if test="pic1 != null">pic1,</if>
+            <if test="pic2 != null">pic2,</if>
+            <if test="pic3 != null">pic3,</if>
+            <if test="pic4 != null">pic4,</if>
+            <if test="pic5 != null">pic5,</if>
+            <if test="bgpic != null">bgpic,</if>
+            <if test="soundcn != null">soundcn,</if>
+            <if test="sounden != null">sounden,</if>
+            <if test="soundhk != null">soundhk,</if>
+            <if test="lontitude != null">lontitude,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="type != null">type,</if>
+            <if test="titlebg != null">titlebg,</if>
+            <if test="cardimg != null">cardimg,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cndetail != null">#{cndetail},</if>
+            <if test="endetail != null">#{endetail},</if>
+            <if test="markerid != null">#{markerid},</if>
+            <if test="cntitle != null">#{cntitle},</if>
+            <if test="entitle != null">#{entitle},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="pic1 != null">#{pic1},</if>
+            <if test="pic2 != null">#{pic2},</if>
+            <if test="pic3 != null">#{pic3},</if>
+            <if test="pic4 != null">#{pic4},</if>
+            <if test="pic5 != null">#{pic5},</if>
+            <if test="bgpic != null">#{bgpic},</if>
+            <if test="soundcn != null">#{soundcn},</if>
+            <if test="sounden != null">#{sounden},</if>
+            <if test="soundhk != null">#{soundhk},</if>
+            <if test="lontitude != null">#{lontitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="type != null">#{type},</if>
+            <if test="titlebg != null">#{titlebg},</if>
+            <if test="cardimg != null">#{cardimg},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDetail2" parameterType="Detail2">
+        update detail2
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cndetail != null">cndetail = #{cndetail},</if>
+            <if test="endetail != null">endetail = #{endetail},</if>
+            <if test="markerid != null">markerid = #{markerid},</if>
+            <if test="cntitle != null">cntitle = #{cntitle},</if>
+            <if test="entitle != null">entitle = #{entitle},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="pic1 != null">pic1 = #{pic1},</if>
+            <if test="pic2 != null">pic2 = #{pic2},</if>
+            <if test="pic3 != null">pic3 = #{pic3},</if>
+            <if test="pic4 != null">pic4 = #{pic4},</if>
+            <if test="pic5 != null">pic5 = #{pic5},</if>
+            <if test="bgpic != null">bgpic = #{bgpic},</if>
+            <if test="soundcn != null">soundcn = #{soundcn},</if>
+            <if test="sounden != null">sounden = #{sounden},</if>
+            <if test="soundhk != null">soundhk = #{soundhk},</if>
+            <if test="lontitude != null">lontitude = #{lontitude},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="titlebg != null">titlebg = #{titlebg},</if>
+            <if test="cardimg != null">cardimg = #{cardimg},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDetail2ById" parameterType="Long">
+        delete from detail2 where id = #{id}
+    </delete>
+
+    <delete id="deleteDetail2ByIds" parameterType="String">
+        delete from detail2 where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

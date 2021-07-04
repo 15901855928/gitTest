@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.test.mapper.Class2Mapper">
+    
+    <resultMap type="Class2" id="Class2Result">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="childname"    column="childname"    />
+        <result property="childpic"    column="childpic"    />
+        <result property="pic"    column="pic"    />
+        <result property="childlonlat"    column="childlonlat"    />
+        <result property="type"    column="type"    />
+        <result property="lon"    column="lon"    />
+        <result property="lat"    column="lat"    />
+    </resultMap>
+
+    <sql id="selectClass2Vo">
+        select id, name, childname, childpic, pic, childlonlat, type, lon, lat from class2
+    </sql>
+
+    <select id="selectClass2List" parameterType="Class2" resultMap="Class2Result">
+        <include refid="selectClass2Vo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="childname != null  and childname != ''"> and childname like concat('%', #{childname}, '%')</if>
+            <if test="childpic != null  and childpic != ''"> and childpic = #{childpic}</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+            <if test="childlonlat != null  and childlonlat != ''"> and childlonlat = #{childlonlat}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="lon != null  and lon != ''"> and lon = #{lon}</if>
+            <if test="lat != null  and lat != ''"> and lat = #{lat}</if>
+        </where>
+    </select>
+    
+    <select id="selectClass2ById" parameterType="Long" resultMap="Class2Result">
+        <include refid="selectClass2Vo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertClass2" parameterType="Class2">
+        insert into class2
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="childname != null">childname,</if>
+            <if test="childpic != null">childpic,</if>
+            <if test="pic != null">pic,</if>
+            <if test="childlonlat != null">childlonlat,</if>
+            <if test="type != null">type,</if>
+            <if test="lon != null">lon,</if>
+            <if test="lat != null">lat,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="childname != null">#{childname},</if>
+            <if test="childpic != null">#{childpic},</if>
+            <if test="pic != null">#{pic},</if>
+            <if test="childlonlat != null">#{childlonlat},</if>
+            <if test="type != null">#{type},</if>
+            <if test="lon != null">#{lon},</if>
+            <if test="lat != null">#{lat},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClass2" parameterType="Class2">
+        update class2
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="childname != null">childname = #{childname},</if>
+            <if test="childpic != null">childpic = #{childpic},</if>
+            <if test="pic != null">pic = #{pic},</if>
+            <if test="childlonlat != null">childlonlat = #{childlonlat},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="lon != null">lon = #{lon},</if>
+            <if test="lat != null">lat = #{lat},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClass2ById" parameterType="Long">
+        delete from class2 where id = #{id}
+    </delete>
+
+    <delete id="deleteClass2ByIds" parameterType="String">
+        delete from class2 where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

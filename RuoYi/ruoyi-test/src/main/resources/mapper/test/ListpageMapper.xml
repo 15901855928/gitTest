@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.test.mapper.ListpageMapper">
+    
+    <resultMap type="Listpage" id="ListpageResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="pic"    column="pic"    />
+        <result property="bgpic"    column="bgpic"    />
+    </resultMap>
+
+    <sql id="selectListpageVo">
+        select id, name, pic, bgpic from listpage
+    </sql>
+
+    <select id="selectListpageList" parameterType="Listpage" resultMap="ListpageResult">
+        <include refid="selectListpageVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+            <if test="bgpic != null  and bgpic != ''"> and bgpic = #{bgpic}</if>
+        </where>
+    </select>
+    
+    <select id="selectListpageById" parameterType="Long" resultMap="ListpageResult">
+        <include refid="selectListpageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertListpage" parameterType="Listpage" useGeneratedKeys="true" keyProperty="id">
+        insert into listpage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="pic != null">pic,</if>
+            <if test="bgpic != null">bgpic,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="pic != null">#{pic},</if>
+            <if test="bgpic != null">#{bgpic},</if>
+         </trim>
+    </insert>
+
+    <update id="updateListpage" parameterType="Listpage">
+        update listpage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="pic != null">pic = #{pic},</if>
+            <if test="bgpic != null">bgpic = #{bgpic},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteListpageById" parameterType="Long">
+        delete from listpage where id = #{id}
+    </delete>
+
+    <delete id="deleteListpageByIds" parameterType="String">
+        delete from listpage where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
